@@ -43,7 +43,7 @@ RUN sed -i -e "s/<? */<?php/" /var/www/ttrss/plugins/mobilize/m.php
 RUN chown www-data:www-data -R /var/www
 
 # expose only nginx HTTP port
-EXPOSE 80
+EXPOSE 443
 
 # expose default database credentials via ENV in order to ease overwriting
 ENV DB_NAME ttrss
@@ -64,6 +64,9 @@ ADD service-php5-fpm.sh /etc/service/php5-fpm/run
 
 RUN mkdir /etc/service/ttrss-update
 ADD service-ttrss-update.sh /etc/service/ttrss-update/run
+
+RUN mkdir /root/certs
+VOLUME /root/certs
 
 ADD 10_ttrss.sh /etc/my_init.d/10_ttrss.sh
 CMD /sbin/my_init
