@@ -6,6 +6,13 @@ set -x
 php /root/configure-db.php
 php /root/configure-plugin-mobilize.php
 
+#Backward compatibility
+if [ -f /etc/ssl/private/ttrss.key ] && [ -f /etc/ssl/certs/ttrss.cert ]
+then
+  ln -s /etc/ssl/private/ttrss.key /root/certs/key 
+  ln -s /etc/ssl/certs/ttrss.cert /root/certs/cert 
+fi
+
 # Generate the TLS certificate for our Tiny Tiny RSS server instance.
 if [ ! -f /root/certs/key ] && [ ! -f /root/certs/cert ]
 then
