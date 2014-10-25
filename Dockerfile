@@ -4,11 +4,11 @@ MAINTAINER Andreas Löffler <andy@x86dev.com>
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
   nginx git ca-certificates php5-fpm php5-cli php5-curl php5-gd php5-json \
-  php5-pgsql 
+  php5-pgsql
 # php5-mysql
 
 # add ttrss as the only nginx site
-ADD ttrss.nginx.conf /etc/nginx/sites-available/ttrss
+ADD ttrss-nginx.conf /etc/nginx/sites-available/ttrss
 RUN ln -s /etc/nginx/sites-available/ttrss /etc/nginx/sites-enabled/ttrss
 RUN rm /etc/nginx/sites-enabled/default
 
@@ -39,10 +39,14 @@ ADD ttrss-plugin-mobilize.pgsql /var/www/ttrss/plugins/mobilize/ttrss-plugin-mob
 # patch ttrss-mobilize plugin for getting it to work
 RUN sed -i -e "s/<? */<?php/" /var/www/ttrss/plugins/mobilize/m.php
 
+# install tt-rss-newsplus-plugin (for use with News+ on Android)
+RUN git clone https://github.com/hrk/tt-rss-newsplus-plugin.git /var/www/ttrss/plugins/api_newsplus
+RUN ln -s /var/www/ttrss/plugins/api_newsplus/api_newsplus/init.php /var/www/ttrss/plugins/api_newsplus/init.php
+
 # apply ownership of ttrss + addons to www-data
 RUN chown www-data:www-data -R /var/www
 
-# expose only nginx HTTP port
+# expose nginx HTTPS port
 EXPOSE 443
 
 # expose default database credentials via ENV in order to ease overwriting
@@ -55,6 +59,9 @@ ENV DB_PASS ttrss
 ADD utils.php /root/utils.php
 ADD configure-db.php /root/configure-db.php
 ADD configure-plugin-mobilize.php /root/configure-plugin-mobilize.php
+
+# Enable additional system plugins: api_newsplus
+RUN sed -i -e "s/.*define('PLUGINS'.*/define('PLUGINS', 'api_newsplus, auth_internal, note, updater');/g" /var/www/ttrss/config.php
 
 RUN mkdir /etc/service/nginx
 ADD service-nginx.sh /etc/service/nginx/run

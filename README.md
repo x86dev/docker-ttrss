@@ -4,8 +4,9 @@ This Dockerfile installs Tiny Tiny RSS with the following features:
 
 - Integrated [Feedly theme](https://github.com/levito/tt-rss-feedly-theme)
 - Integrated [mobilize plugin](https://github.com/sepich/tt-rss-mobilize) for using Readability, Instapaper + Google Mobilizer
+- New: Integrated [tt-rss-newsplus-plugin](https://github.com/hrk/tt-rss-newsplus-plugin) for News+ for Android
 - Self-signed 2048-bit RSA TLS certificate for accessing Tiny Tiny RSS via https
-- Originally was based on [clue/docker-ttrss.git](https://github.com/clue/docker-ttrss)
+- Originally was based on [clue/docker-ttrss](https://github.com/clue/docker-ttrss)
 
 Feel free to tweak this further to your likings.
 
@@ -29,7 +30,7 @@ And because this docker image is available as a [trusted build on the docker ind
 using it is as simple as launching this Tiny Tiny RSS installation linked to your fresh database:
 
 ```bash
-$ docker run -d --link $DB:db -p 443:443 --name ttrss <this-image>
+$ docker run -d --link $DB:db -p 443:443 --name ttrss x86dev/docker-ttrss
 ```
 
 Running this command for the first time will download the image automatically.
@@ -76,7 +77,7 @@ This is particular useful for your initial database setup, as errors get reporte
 the console and further execution will halt.
 
 ```bash
-$ sudo docker run -it --link ttrss-data:db -p 443:443 --name ttrss <this-image>
+$ sudo docker run -it --link ttrss-data:db -p 443:443 --name ttrss x86dev/docker-ttrss
 ```
 
 ##### Database configuration
@@ -112,5 +113,31 @@ Remaining arguments can be passed just like before, the following is the recomme
 minimum:
 
 ```bash
-$ sudo docker run -d --link ttrss-data:db -p 443:443 --name ttrss <this-image>
+$ sudo docker run -d --link ttrss-data:db -p 443:443 --name ttrss x86dev/docker-ttrss
+```
+
+##### Backing up / moving to another server
+
+Decided to back up your data container and/or move to another server? Here's how
+you do it:
+
+On the old server, stop your ttrss container and then do:
+
+```
+docker commit -m "Backup of XXX" <CONTAINER NAME>
+docker save <IMAGE CREATED BY COMMIT> > /tmp/<filename>.tar
+```
+
+On the new server, copy the created .tar file from the old server and 
+import the file with:
+
+```
+docker load < <filename.tar>
+```
+
+This will load the container from the .tar file into Docker's local registry.
+After that you can run that imported container again the usual way with:
+
+```
+docker run -d <IMAGE ID>
 ```
