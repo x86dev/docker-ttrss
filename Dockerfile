@@ -4,7 +4,7 @@ MAINTAINER Andreas Löffler <andy@x86dev.com>
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
   nginx git ca-certificates php5-fpm php5-cli php5-curl php5-gd php5-json \
-  php5-pgsql 
+  php5-pgsql
 # php5-mysql
 
 # add ttrss as the only nginx site
@@ -71,6 +71,9 @@ ADD service-php5-fpm.sh /etc/service/php5-fpm/run
 
 RUN mkdir /etc/service/ttrss-update
 ADD service-ttrss-update.sh /etc/service/ttrss-update/run
+
+RUN mkdir /root/certs
+VOLUME /root/certs
 
 ADD 10_ttrss.sh /etc/my_init.d/10_ttrss.sh
 CMD /sbin/my_init
