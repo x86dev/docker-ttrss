@@ -59,7 +59,11 @@ setup_ttrss()
     cp ${TTRSS_PATH}/config.php-dist ${TTRSS_PATH}/config.php
 
     # Patch URL path.
-    sed -i -e 's@htt.*/@'"${SELF_URL_PATH-http://localhost/}"'@g' ${TTRSS_PATH}/config.php
+    if [ "$TTRSS_SSL_ENABLED" = "1" ]; then
+        sed -i -e 's@htt.*/@'"${SELF_URL_PATH-https://localhost/}"'@g' ${TTRSS_PATH}/config.php
+    else
+        sed -i -e 's@htt.*/@'"${SELF_URL_PATH-http://localhost/}"'@g' ${TTRSS_PATH}/config.php
+    fi
 
     # Enable additional system plugins: api_newsplus.
     sed -i -e "s/.*define('PLUGINS'.*/define('PLUGINS', 'api_newsplus, auth_internal, note, updater');/g" ${TTRSS_PATH}/config.php
