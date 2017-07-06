@@ -26,7 +26,12 @@ function dbconnect($config)
             $dsn .= $d . '=' . $config['DB_' . $h] . ';';
         }
     }
-    $pdo = new \PDO($dsn);
+    echo($dsn);
+    if ($config['DB_TYPE'] == 'pgsql'){
+        $pdo = new \PDO($dsn);
+    } else {
+        $pdo = new \PDO($dsn, $config['DB_USER'], $config['DB_PASS']);
+    }
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $pdo;
 }

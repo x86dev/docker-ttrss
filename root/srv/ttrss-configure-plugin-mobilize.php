@@ -5,6 +5,11 @@ include '/srv/ttrss-utils.php';
 
 $ename = 'DB';
 $eport = 5432;
+
+$db_type = env('DB_TYPE','pgsql');
+if ($db_type == 'mysql'){
+    $eport = 3306;
+}
 $confpath = '/var/www/ttrss/config.php';
 
 // check DB_NAME, which will be set automatically for a linked "db" container
@@ -13,7 +18,7 @@ if (!env($ename . '_PORT', '')) {
 }
 
 $config = array();
-$config['DB_TYPE'] = 'pgsql';
+$config['DB_TYPE'] = $db_type;
 $config['DB_HOST'] = env($ename . '_PORT_' . $eport . '_TCP_ADDR');
 $config['DB_PORT'] = env($ename . '_PORT_' . $eport . '_TCP_PORT');
 
@@ -32,7 +37,7 @@ try {
 }
 catch (PDOException $e) {
     echo 'Database table for mobilize plugin not found, applying schema... ' . PHP_EOL;
-    $schema = file_get_contents('/srv/ttrss-plugin-mobilize.pgsql');
+    $schema = file_get_contents('/srv/ttrss-plugin-mobilize.'.$db_type);
     $schema = preg_replace('/--(.*?);/', '', $schema);
     $schema = preg_replace('/[\r\n]/', ' ', $schema);
     $schema = trim($schema, ' ;');

@@ -10,6 +10,11 @@ $conffile = $confpath . 'config.php';
 $ename = 'DB';
 $eport = 5432;
 
+$db_type = env('DB_TYPE','pgsql');
+if ($db_type == 'mysql'){
+    $eport = 3306;
+}
+
 echo 'Configuring database for: ' . $conffile . PHP_EOL;
 
 // check DB_NAME, which will be set automatically for a linked "db" container
@@ -18,7 +23,7 @@ if (!env($ename . '_PORT', '')) {
 }
 
 $config = array();
-$config['DB_TYPE'] = 'pgsql';
+$config['DB_TYPE'] = $db_type;
 $config['DB_HOST'] = env($ename . '_PORT_' . $eport . '_TCP_ADDR');
 $config['DB_PORT'] = env($ename . '_PORT_' . $eport . '_TCP_PORT');
 

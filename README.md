@@ -126,6 +126,12 @@ default configuration, which can be changed by passing the following additional 
 -e DB_PASS=ttrss
 ```
 
+#### Run on MySql
+
+```bash
+-e DB_TYPE=mysql
+```
+
 ### Database user
 
 When you run TT-RSS it will check your database setup. If it can not connect using the above
