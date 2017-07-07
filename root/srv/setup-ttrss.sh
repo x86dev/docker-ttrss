@@ -10,7 +10,7 @@ setup_nginx()
 
     NGINX_CONF=/etc/nginx/nginx.conf
 
-    if [ "$TTRSS_SSL_ENABLED" = "1" ]; then
+    if [ "$TTRSS_WITH_SELFSIGNED_CERT" = "1" ]; then
         # Install OpenSSL.
         apk update && apk add openssl
         
@@ -32,8 +32,9 @@ setup_nginx()
         chmod 600 "/etc/ssl/private/ttrss.key"
         chmod 600 "/etc/ssl/certs/ttrss.crt"
     else
-        echo "Setup: !!! WARNING !!! Turning OFF SSL/TLS !!! WARNING !!!"
-        echo "Setup: This is not recommended for a production server. You have been warned."
+        echo "Setup: !!! WARNING - No encryption (TLS) used - WARNING    !!!"
+        echo "Setup: !!! This is not recommended for a production server !!!"
+        echo "Setup:                You have been warned."
         
         # Turn off SSL.
         sed -i -e "s/listen\s*4443\s*;/listen 8080;/g" ${NGINX_CONF}
@@ -58,20 +59,55 @@ setup_ttrss()
     # Add initial config.
     cp ${TTRSS_PATH}/config.php-dist ${TTRSS_PATH}/config.php
 
-    # Patch URL path.
-    if [ "$TTRSS_SSL_ENABLED" = "1" ]; then
-        sed -i -e 's@htt.*/@'"${SELF_URL_PATH-https://localhost/}"'@g' ${TTRSS_PATH}/config.php
-    else
-        sed -i -e 's@htt.*/@'"${SELF_URL_PATH-http://localhost/}"'@g' ${TTRSS_PATH}/config.php
+    # VIRTUAL_HOST + VIRTUAL_PORT are used by nginx-proxy.
+
+    # Check if VIRTUAL_HOST is defined, and if so, use this as TTRSS_URL.
+    if [ -n ${VIRTUAL_HOST} ]; then
+        TTRSS_URL=${VIRTUAL_HOST}
     fi
 
+    # Ditto for TTRSS_PORT.
+    if [ -n ${VIRTUAL_PORT} ]; then
+        TTRSS_PORT=${VIRTUAL_PORT}
+    fi
+
+    if [ "$TTRSS_WITH_SELFSIGNED_CERT" = "1" ]; then
+    
+        # Make sure the TTRSS protocol is https now.
+        TTRSS_PROTO=https
+
+        # Set the default https port if not specified otherwise.
+        if [ -z ${TTRSS_PORT} ]; then
+            TTRSS_PORT=4443
+        fi
+    fi
+
+    # If no protocol is specified, use http as default. Not secure, I know.
+    if [ -z ${TTRSS_PROTO} ]; then
+        
+        TTRSS_PROTO=http
+
+        # Set the default port if not specified otherwise.
+        if [ -z ${TTRSS_PORT} ]; then
+            TTRSS_PORT=8080
+        fi        
+    fi
+      
+    # Construct the final URL TTRSS will use.
+    TTRSS_SELF_URL=${TTRSS_PROTO}://${TTRSS_URL}:${TTRSS_PORT}/
+
+    echo "Setup: URL is: $TTRSS_SELF_URL"
+
+    # Patch URL path.
+    sed -i -e 's@htt.*/@'"${TTRSS_SELF_URL}"'@g' ${TTRSS_PATH}/config.php
+  
     # Enable additional system plugins: api_newsplus.
     sed -i -e "s/.*define('PLUGINS'.*/define('PLUGINS', 'api_newsplus, auth_internal, note, updater');/g" ${TTRSS_PATH}/config.php
 }
 
 echo "Setup: Installing Tiny Tiny RSS ..."
-setup_ttrss
 setup_nginx
+setup_ttrss
 
 echo "Setup: Applying updates ..."
 /srv/update-ttrss.sh --no-start

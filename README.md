@@ -43,6 +43,7 @@ Next, run the actual TT-RSS instance by doing a:
 
 Running this command for the first time will download the image automatically.
 
+
 ## Accessing your Tiny Tiny RSS (TT-RSS)
 
 The above example exposes the TT-RSS web interface on port 80 (http), so that you can browse to:
@@ -59,11 +60,12 @@ Password: password
 ```
 
 Obviously, you're recommended to change those ASAP.
+See the next section about how to enable encryption support (via SSL/TLS).
 
 
-## Enabling SSL/TLS encryption support
+## Use self-signed certificates (SSL/TLS)
 
-For enabling SSL/TLS support with a self-signed certificate you have to add `-e TTRSS_SSL_ENABLED=1 -p 443:4443`
+For enabling SSL/TLS support with a self-signed certificate you have to add `-e TTRSS_WITH_SELFSIGNED_CERT=1 -p 443:4443`
 when running your TT-RSS container. Then you can access TT-RSS via: `https://<yourhost>`.
 
 **Warning: Running services unencrypted on the Internet is not recommended!**
@@ -77,17 +79,20 @@ A nice thing to have is jwilder's [nginx-proxy](https://github.com/jwilder/nginx
 Docker container running on the same machine as this one.
 
 That way you easily can integrate your TT-RSS instance with an existing domain by using a sub domain
-(e.g. https://ttrss.yourdomain.com). In combination with an official Let's Encrypt certificate you
+(e.g. https://ttrss.yourdomain.tld). 
+
+### Enabling SSL/TLS encryption support 
+
+In combination with an official Let's Encrypt certificate you
 can get a nice A+ encryption/security rating over at [SSLLabs](https://www.ssllabs.com/ssltest/).
 
-**Never run your services unencrypted!**
 
 ## Installation walkthrough
 
 ### Running
 
 Following Docker's best practices, this container does not contain its own database,
-but instead expects you to supply a running instance.
+but instead expects you to supply a running database instance.
 While slightly more complicated at first, this gives your more freedom as to which
 database instance and configuration you're relying on.
 Also, this makes this container quite disposable, as it doesn't store any sensitive
@@ -126,8 +131,11 @@ default configuration, which can be changed by passing the following additional 
 -e DB_PASS=ttrss
 ```
 
-#### Run on MySql
+By default, a PostgreSQL database is needed.
 
+#### Use a MySQL database
+
+Specify the following to use an existing MySQL database instead of a PostgreSQL one:
 ```bash
 -e DB_TYPE=mysql
 ```
