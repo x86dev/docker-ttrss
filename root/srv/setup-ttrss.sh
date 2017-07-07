@@ -65,7 +65,7 @@ setup_ttrss()
     fi
 
     # Tweak TTRSS_PORT, if defined.
-    if [ -n ${TTRSS_PORT} ]; then
+    if [ -n "$TTRSS_PORT" ]; then
         TTRSS_PORT=:${TTRSS_PORT}
     fi
 
