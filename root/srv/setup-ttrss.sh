@@ -59,16 +59,14 @@ setup_ttrss()
     # Add initial config.
     cp ${TTRSS_PATH}/config.php-dist ${TTRSS_PATH}/config.php
 
-    # VIRTUAL_HOST + VIRTUAL_PORT are used by nginx-proxy.
-
-    # Check if VIRTUAL_HOST is defined, and if so, use this as TTRSS_URL.
-    if [ -n ${VIRTUAL_HOST} ]; then
-        TTRSS_URL=${VIRTUAL_HOST}
+    # Check if TTRSS_URL is undefined, and if so, use localhost as default.
+    if [ -z ${TTRSS_URL} ]; then
+        TTRSS_URL=localhost
     fi
 
-    # Ditto for TTRSS_PORT.
-    if [ -n ${VIRTUAL_PORT} ]; then
-        TTRSS_PORT=${VIRTUAL_PORT}
+    # Tweak TTRSS_PORT, if defined.
+    if [ -n ${TTRSS_PORT} ]; then
+        TTRSS_PORT=:${TTRSS_PORT}
     fi
 
     if [ "$TTRSS_WITH_SELFSIGNED_CERT" = "1" ]; then
@@ -78,7 +76,7 @@ setup_ttrss()
 
         # Set the default https port if not specified otherwise.
         if [ -z ${TTRSS_PORT} ]; then
-            TTRSS_PORT=4443
+            TTRSS_PORT=:4443
         fi
     fi
 
@@ -89,12 +87,12 @@ setup_ttrss()
 
         # Set the default port if not specified otherwise.
         if [ -z ${TTRSS_PORT} ]; then
-            TTRSS_PORT=8080
+            TTRSS_PORT=:8080
         fi        
     fi
       
     # Construct the final URL TTRSS will use.
-    TTRSS_SELF_URL=${TTRSS_PROTO}://${TTRSS_URL}:${TTRSS_PORT}/
+    TTRSS_SELF_URL=${TTRSS_PROTO}://${TTRSS_URL}${TTRSS_PORT}/
 
     echo "Setup: URL is: $TTRSS_SELF_URL"
 
