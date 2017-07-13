@@ -32,9 +32,6 @@ ENV DB_NAME ttrss
 ENV DB_USER ttrss
 ENV DB_PASS ttrss
 
-# Only run the setup once.
-RUN set -xe && /srv/setup-ttrss.sh
-
 # Clean up.
 RUN set -xe && apk del --progress --purge && rm -rf /var/cache/apk/*
 

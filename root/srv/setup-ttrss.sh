@@ -50,11 +50,13 @@ setup_ttrss()
     if [ ! -d ${TTRSS_PATH} ]; then
         mkdir -p ${TTRSS_PATH}
         if [ -n "$TTRSS_GIT_TAG" ]; then
+            echo "Setup: Setting up Tiny Tiny RSS '$TTRSS_GIT_TAG' ..."
             cd ${TTRSS_PATH}
             git init .
-            git fetch --depth 1 https://tt-rss.org/gitlab/fox/tt-rss.git refs/tags/${TTRSS_GIT_TAG}:refs/tags/${TTRSS_GIT_TAG}
+            git fetch --depth=1 https://tt-rss.org/gitlab/fox/tt-rss.git refs/tags/${TTRSS_GIT_TAG}:refs/tags/${TTRSS_GIT_TAG}
             git checkout tags/${TTRSS_GIT_TAG} 
         else
+            echo "Setup: Setting up Tiny Tiny RSS (latest revision) ..."
             git clone --depth=1 https://tt-rss.org/gitlab/fox/tt-rss.git ${TTRSS_PATH}
         fi
         git clone --depth=1 https://github.com/sepich/tt-rss-mobilize.git ${TTRSS_PATH}/plugins/mobilize
