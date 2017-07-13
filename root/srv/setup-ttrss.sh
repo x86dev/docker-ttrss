@@ -49,7 +49,14 @@ setup_ttrss()
 
     if [ ! -d ${TTRSS_PATH} ]; then
         mkdir -p ${TTRSS_PATH}
-        git clone --depth=1 https://tt-rss.org/gitlab/fox/tt-rss.git ${TTRSS_PATH}
+        if [ -n "$TTRSS_GIT_TAG" ]; then
+            cd ${TTRSS_PATH}
+            git init .
+            git fetch --depth 1 https://tt-rss.org/gitlab/fox/tt-rss.git refs/tags/${TTRSS_GIT_TAG}:refs/tags/${TTRSS_GIT_TAG}
+            git checkout tags/${TTRSS_GIT_TAG} 
+        else
+            git clone --depth=1 https://tt-rss.org/gitlab/fox/tt-rss.git ${TTRSS_PATH}
+        fi
         git clone --depth=1 https://github.com/sepich/tt-rss-mobilize.git ${TTRSS_PATH}/plugins/mobilize
         git clone --depth=1 https://github.com/hrk/tt-rss-newsplus-plugin.git ${TTRSS_PATH}/plugins/api_newsplus
         git clone --depth=1 https://github.com/m42e/ttrss_plugin-feediron.git ${TTRSS_PATH}/plugins/feediron

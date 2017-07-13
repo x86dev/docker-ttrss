@@ -5,6 +5,11 @@ TTRSS_PATH=/var/www/ttrss
 
 update_ttrss()
 {
+    if [ -n "$TTRSS_GIT_TAG" ]; then
+        echo "Updating Tiny Tiny RSS disabled (using tag '$TTRSS_GIT_TAG')"
+        return
+    fi
+
     echo "Updating: Tiny Tiny RSS"
     ( cd ${TTRSS_PATH} && git pull origin HEAD )
 
