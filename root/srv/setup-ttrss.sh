@@ -112,11 +112,15 @@ setup_ttrss()
     sed -i -e "s/.*define('PLUGINS'.*/define('PLUGINS', 'api_newsplus, auth_internal, note, updater');/g" ${TTRSS_PATH}/config.php
 }
 
-echo "Setup: Installing Tiny Tiny RSS ..."
+setup_db()
+{
+    echo "Setup: Database"
+    php -f /srv/ttrss-configure-db.php
+    php -f /srv/ttrss-configure-plugin-mobilize.php
+}
+
 setup_nginx
 setup_ttrss
-
-echo "Setup: Applying updates ..."
-/srv/update-ttrss.sh --no-start
+setup_db
 
 echo "Setup: Done"

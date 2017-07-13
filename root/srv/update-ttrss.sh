@@ -12,12 +12,6 @@ update_ttrss()
 
     echo "Updating: Tiny Tiny RSS"
     ( cd ${TTRSS_PATH} && git pull origin HEAD )
-
-    if [ -n "$DB_PORT" ]; then
-        echo "Updating: Database"
-        php -f /srv/ttrss-configure-db.php
-        php -f /srv/ttrss-configure-plugin-mobilize.php
-    fi
 }
 
 update_plugin_mobilize()
