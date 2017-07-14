@@ -52,22 +52,14 @@ update_theme_feedly()
 update_common()
 {
     echo "Updating: Updating permissions"
-    for dir in /etc/nginx /etc/php5 /var/log /var/lib/nginx /tmp /etc/services.d; do
-    if $(find $dir ! -user $UID -o ! -group $GID | egrep '.' -q); then
-        echo "Updating: Updating permissions in $dir..."
-        chown -R $UID:$GID $dir
-    else
-        echo "Updating: Permissions in $dir are correct"
-    fi
+    for CUR_DIR in /etc/nginx /etc/php5 /var/log /var/lib/nginx /tmp /etc/services.d; do
+        chown -R $UID:$GID ${CUR_DIR}
     done
 
     chown -R www-data:www-data ${TTRSS_PATH}
 
-    echo "Updating: updating permissions done"
+    echo "Updating: Updating permissions done"
 }
-
-echo "Update: Updating rolling release ..."
-echo "Update: Stopping all ..."
 
 update_ttrss
 update_plugin_mobilize
@@ -81,6 +73,7 @@ echo "Update: Done"
 if [ "$1" != "--no-start" ]; then
     echo "Update: Starting all ..."
 fi
+
 if [ "$1" = "--wait-exit" ]; then
     UPDATE_WAIT_TIME=$2
     if [ -z "$UPDATE_WAIT_TIME" ]; then
