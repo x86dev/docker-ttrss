@@ -50,9 +50,16 @@ update_theme_feedly()
 
 update_common()
 {
+    if [ -z "$MY_ROOT_UID" ]; then
+        MY_ROOT_UID=0
+    fi
+    if [ -z "$MY_ROOT_GID" ]; then
+        MY_ROOT_GID=0
+    fi
+
     echo "Updating: Updating permissions"
-    for CUR_DIR in /etc/nginx /etc/php5 /var/lib/nginx /tmp /etc/services.d; do
-        chown -R $UID:$GID ${CUR_DIR}
+    for CUR_DIR in /etc/nginx /etc/php5 /var/lib/nginx /etc/services.d; do
+        chown -R ${MY_ROOT_UID}:${MY_ROOT_GID} ${CUR_DIR}
     done
 
     chown -R www-data:www-data ${TTRSS_PATH}
