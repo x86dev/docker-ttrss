@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 setup_nginx()
 {
     if [ -z "$TTRSS_HOST" ]; then

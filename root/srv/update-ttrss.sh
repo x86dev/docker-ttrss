@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 
 TTRSS_PATH=/var/www/ttrss
 
@@ -52,7 +51,7 @@ update_theme_feedly()
 update_common()
 {
     echo "Updating: Updating permissions"
-    for CUR_DIR in /etc/nginx /etc/php5 /var/log /var/lib/nginx /tmp /etc/services.d; do
+    for CUR_DIR in /etc/nginx /etc/php5 /var/lib/nginx /tmp /etc/services.d; do
         chown -R $UID:$GID ${CUR_DIR}
     done
 
