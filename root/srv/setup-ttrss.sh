@@ -123,4 +123,7 @@ setup_nginx
 setup_ttrss
 setup_db
 
+echo "Setup: Applying updates ..."
+/srv/update-ttrss.sh --no-start
+
 echo "Setup: Done"
