@@ -44,18 +44,18 @@ setup_nginx()
 setup_ttrss()
 {
     TTRSS_PATH=/var/www/ttrss
-
+    TTRSS_REPO=https://git.tt-rss.org/git/tt-rss.git
     if [ ! -d ${TTRSS_PATH} ]; then
         mkdir -p ${TTRSS_PATH}
         if [ -n "$TTRSS_GIT_TAG" ]; then
             echo "Setup: Setting up Tiny Tiny RSS '$TTRSS_GIT_TAG' ..."
             cd ${TTRSS_PATH}
             git init .
-            git fetch --depth=1 https://git.tt-rss.org/git/tt-rss.git refs/tags/${TTRSS_GIT_TAG}:refs/tags/${TTRSS_GIT_TAG}
+            git fetch --depth=1 $TTRSS_REPO refs/tags/${TTRSS_GIT_TAG}:refs/tags/${TTRSS_GIT_TAG}
             git checkout tags/${TTRSS_GIT_TAG} 
         else
             echo "Setup: Setting up Tiny Tiny RSS (latest revision) ..."
-            git clone --depth=1 https://git.tt-rss.org/git/tt-rss.git ${TTRSS_PATH}
+            git clone --depth=1 $TTRSS_REPO ${TTRSS_PATH}
         fi
         git clone --depth=1 https://github.com/sepich/tt-rss-mobilize.git ${TTRSS_PATH}/plugins/mobilize
         git clone --depth=1 https://github.com/hrk/tt-rss-newsplus-plugin.git ${TTRSS_PATH}/plugins/api_newsplus
