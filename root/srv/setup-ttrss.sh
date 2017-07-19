@@ -43,8 +43,14 @@ setup_nginx()
 
 setup_ttrss()
 {
-    TTRSS_PATH=/var/www/ttrss
-    TTRSS_REPO=https://git.tt-rss.org/git/tt-rss.git
+    if [ -z "$TTRSS_REPO" ]; then
+        TTRSS_HOST=https://git.tt-rss.org/git/tt-rss.git
+    fi
+
+    if [ -z "$TTRSS_PATH" ]; then
+    	TTRSS_PATH=/var/www/ttrss
+    fi
+    
     if [ ! -d ${TTRSS_PATH} ]; then
         mkdir -p ${TTRSS_PATH}
         if [ -n "$TTRSS_GIT_TAG" ]; then
