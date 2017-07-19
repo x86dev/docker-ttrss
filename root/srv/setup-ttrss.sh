@@ -80,22 +80,12 @@ setup_ttrss()
     
         # Make sure the TTRSS protocol is https now.
         TTRSS_PROTO=https
-
-        # Set the default https port if not specified otherwise.
-        if [ -z ${TTRSS_PORT} ]; then
-            TTRSS_PORT=:4443
-        fi
     fi
 
     # If no protocol is specified, use http as default. Not secure, I know.
     if [ -z ${TTRSS_PROTO} ]; then
         
         TTRSS_PROTO=http
-
-        # Set the default port if not specified otherwise.
-        if [ -z ${TTRSS_PORT} ]; then
-            TTRSS_PORT=:8080
-        fi        
     fi
       
     # Construct the final URL TTRSS will use.
