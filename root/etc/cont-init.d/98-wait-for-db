@@ -19,5 +19,5 @@ fi
 #############
 
 # Run wait-for-it.sh to confirm DB comes up before we proceed
-echo "Waiting for $dbhost:$eport..."
-/srv/wait-for $dbhost:$eport -- echo "Done"
+echo "Waiting up to 60s for $dbhost:$eport..."
+/srv/wait-for $dbhost:$eport --timeout=60 -- echo "Done"
