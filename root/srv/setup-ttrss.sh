@@ -106,7 +106,7 @@ setup_ttrss()
       
     # If we've been passed $TTRSS_SELF_URL as an env variable, then use that,
     # But if not, use the URL we constructed above
-    if [ -z "$TTRSS_SELF_URL ]; then
+    if [ -z "$TTRSS_SELF_URL" ]; then
   	  # Construct the final URL TTRSS will use.
    	 TTRSS_SELF_URL=${TTRSS_PROTO}://${TTRSS_URL}${TTRSS_PORT}/
     fi
