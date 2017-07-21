@@ -1,0 +1,22 @@
+#!/usr/bin/with-contenv sh
+
+# Wait for the DB to be reachable before proceeding. This avoids race condition
+# whereby database is not ready (yet), and so TTRSS config isn't correctly created
+
+#############
+# This simply duplicates the logic from ttrss-configure-db.php
+ename = 'DB';
+eport = 5432;
+
+if [ $DB_TYPE = 'pgsql ];
+then
+	eport = 5432;
+	dbhost = DB_PORT_5432_TCP_ADDR
+else
+	eport = 3306;
+	dbhost = DB_PORT_3306_TCP_ADDR
+fi
+#############
+
+# Run wait-for-it.sh to confirm DB comes up before we proceed
+/srv/wait-for-it.sh $dbhost:$eport
