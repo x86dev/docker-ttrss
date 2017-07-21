@@ -5,18 +5,19 @@
 
 #############
 # This simply duplicates the logic from ttrss-configure-db.php
-ename = 'DB';
-eport = 5432;
+ename='DB';
+eport=5432;
 
-if [ $DB_TYPE = 'pgsql ];
+if [ '$DB_TYPE' = 'mysql' ];
 then
-	eport = 5432;
-	dbhost = DB_PORT_5432_TCP_ADDR
+	eport=3306;
+	dbhost=$DB_PORT_3306_TCP_ADDR
 else
-	eport = 3306;
-	dbhost = DB_PORT_3306_TCP_ADDR
+	eport=5432;
+	dbhost=$DB_PORT_5432_TCP_ADDR
 fi
 #############
 
 # Run wait-for-it.sh to confirm DB comes up before we proceed
-/srv/wait-for-it.sh $dbhost:$eport
+echo "Waiting for $dbhost:$eport..."
+/srv/wait-for $dbhost:$eport -- echo "Done"

@@ -24,7 +24,8 @@ COPY root /
 RUN curl -L -s https://github.com/just-containers/s6-overlay/releases/download/v1.19.1.1/s6-overlay-amd64.tar.gz | tar xvzf - -C /
 
 # Add wait-for-it.sh
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /srv
+ADD https://raw.githubusercontent.com/Eficode/wait-for/master/wait-for /srv
+RUN chmod 755 /srv/wait-for
 
 # Expose Nginx ports.
 EXPOSE 8080
