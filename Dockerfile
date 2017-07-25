@@ -32,6 +32,9 @@ ENV DB_NAME ttrss
 ENV DB_USER ttrss
 ENV DB_PASS ttrss
 
+# Expose volumes
+VOLUME [ "/var/www/ttrss-plugins", "/var/www/ttrss-themes" ]
+
 # Clean up.
 RUN set -xe && apk del --progress --purge && rm -rf /var/cache/apk/*
 

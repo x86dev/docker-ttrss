@@ -57,6 +57,13 @@ setup_ttrss()
             echo "Setup: Setting up Tiny Tiny RSS (latest revision) ..."
             git clone --depth=1 https://tt-rss.org/gitlab/fox/tt-rss.git ${TTRSS_PATH}
         fi
+	# Move pristine directories (re-used for updates), create links to volume mounts
+	mkdir -p ${TTRSS_PATH}.orig ${TTRSS_PATH}.temp
+	mv ${TTRSS_PATH}/plugins.local ${TTRSS_PATH}/themes.local ${TTRSS_PATH}.orig/
+	mkdir -p ${TTRSS_PATH}-plugins ${TTRSS_PATH}-themes
+	ln -s ${TTRSS_PATH}-plugins ${TTRSS_PATH}/plugins.local
+	ln -s ${TTRSS_PATH}-themes ${TTRSS_PATH}/themes.local
+	# Clone default plugins / themes
         git clone --depth=1 https://github.com/sepich/tt-rss-mobilize.git ${TTRSS_PATH}/plugins/mobilize
         git clone --depth=1 https://github.com/hrk/tt-rss-newsplus-plugin.git ${TTRSS_PATH}/plugins/api_newsplus
         git clone --depth=1 https://github.com/m42e/ttrss_plugin-feediron.git ${TTRSS_PATH}/plugins/feediron
