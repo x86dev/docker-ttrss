@@ -11,7 +11,7 @@ setup_nginx()
     if [ "$TTRSS_WITH_SELFSIGNED_CERT" = "1" ]; then
         # Install OpenSSL.
         apk update && apk add openssl
-        
+
         if [ ! -f "/etc/ssl/private/ttrss.key" ]; then
             echo "Setup: Generating self-signed certificate ..."
             # Generate the TLS certificate for our Tiny Tiny RSS server instance.
@@ -33,7 +33,7 @@ setup_nginx()
         echo "Setup: !!! WARNING - No encryption (TLS) used - WARNING    !!!"
         echo "Setup: !!! This is not recommended for a production server !!!"
         echo "Setup:                You have been warned."
-        
+
         # Turn off SSL.
         sed -i -e "s/listen\s*4443\s*;/listen 8080;/g" ${NGINX_CONF}
         sed -i -e "s/ssl\s*on\s*;/ssl off;/g" ${NGINX_CONF}
@@ -52,7 +52,7 @@ setup_ttrss()
             cd ${TTRSS_PATH}
             git init .
             git fetch --depth=1 https://tt-rss.org/gitlab/fox/tt-rss.git refs/tags/${TTRSS_GIT_TAG}:refs/tags/${TTRSS_GIT_TAG}
-            git checkout tags/${TTRSS_GIT_TAG} 
+            git checkout tags/${TTRSS_GIT_TAG}
         else
             echo "Setup: Setting up Tiny Tiny RSS (latest revision) ..."
             git clone --depth=1 https://tt-rss.org/gitlab/fox/tt-rss.git ${TTRSS_PATH}
@@ -77,7 +77,7 @@ setup_ttrss()
     fi
 
     if [ "$TTRSS_WITH_SELFSIGNED_CERT" = "1" ]; then
-    
+
         # Make sure the TTRSS protocol is https now.
         TTRSS_PROTO=https
 
@@ -89,15 +89,15 @@ setup_ttrss()
 
     # If no protocol is specified, use http as default. Not secure, I know.
     if [ -z ${TTRSS_PROTO} ]; then
-        
+
         TTRSS_PROTO=http
 
         # Set the default port if not specified otherwise.
         if [ -z ${TTRSS_PORT} ]; then
             TTRSS_PORT=:8080
-        fi        
+        fi
     fi
-      
+
     # Construct the final URL TTRSS will use.
     TTRSS_SELF_URL=${TTRSS_PROTO}://${TTRSS_URL}${TTRSS_PORT}/
 
@@ -105,9 +105,22 @@ setup_ttrss()
 
     # Patch URL path.
     sed -i -e 's@htt.*/@'"${TTRSS_SELF_URL}"'@g' ${TTRSS_PATH}/config.php
-  
-    # Enable additional system plugins: api_newsplus.
-    sed -i -e "s/.*define('PLUGINS'.*/define('PLUGINS', 'api_newsplus, auth_internal, note, updater');/g" ${TTRSS_PATH}/config.php
+
+    # Enable additional system plugins.
+    if [ -z ${TTRSS_PLUGINS} ]; then
+
+        # api_newsplus (API for News+ Android App).
+        TTRSS_PLUGINS=api_newsplus
+
+        # Only if SSL/TLS is enabled: af_zz_imgproxy (Loads insecure images via built-in proxy).
+        if [ "$TTRSS_PROTO" = "https" ]; then
+            TTRSS_PLUGINS=${TTRSS_PLUGINS},af_zz_imgproxy
+        fi
+    fi
+
+    echo "Setup: Additional plugins: $TTRSS_PLUGINS"
+
+    sed -i -e "s/.*define('PLUGINS'.*/define('PLUGINS', '$TTRSS_PLUGINS, auth_internal, note, updater');/g" ${TTRSS_PATH}/config.php
 }
 
 setup_db()
