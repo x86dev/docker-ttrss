@@ -43,25 +43,25 @@ setup_nginx()
 
 setup_ttrss()
 {
-    if [ -z "$TTRSS_REPO" ]; then
-        TTRSS_HOST=https://git.tt-rss.org/git/tt-rss.git
+    if [ -z "$TTRSS_REPO_URL" ]; then
+        TTRSS_REPO_URL=https://git.tt-rss.org/git/tt-rss.git
     fi
 
     if [ -z "$TTRSS_PATH" ]; then
     	TTRSS_PATH=/var/www/ttrss
     fi
-    
+
     if [ ! -d ${TTRSS_PATH} ]; then
         mkdir -p ${TTRSS_PATH}
         if [ -n "$TTRSS_GIT_TAG" ]; then
             echo "Setup: Setting up Tiny Tiny RSS '$TTRSS_GIT_TAG' ..."
             cd ${TTRSS_PATH}
             git init .
-            git fetch --depth=1 $TTRSS_REPO refs/tags/${TTRSS_GIT_TAG}:refs/tags/${TTRSS_GIT_TAG}
-            git checkout tags/${TTRSS_GIT_TAG} 
+            git fetch --depth=1 ${TTRSS_REPO_URL} refs/tags/${TTRSS_GIT_TAG}:refs/tags/${TTRSS_GIT_TAG}
+            git checkout tags/${TTRSS_GIT_TAG}
         else
             echo "Setup: Setting up Tiny Tiny RSS (latest revision) ..."
-            git clone --depth=1 $TTRSS_REPO ${TTRSS_PATH}
+            git clone --depth=1 ${TTRSS_REPO_URL} ${TTRSS_PATH}
         fi
         git clone --depth=1 https://github.com/sepich/tt-rss-mobilize.git ${TTRSS_PATH}/plugins/mobilize
         git clone --depth=1 https://github.com/hrk/tt-rss-newsplus-plugin.git ${TTRSS_PATH}/plugins/api_newsplus
@@ -103,7 +103,7 @@ setup_ttrss()
             TTRSS_PORT=:8080
         fi
     fi
-      
+
     # If we've been passed $TTRSS_SELF_URL as an env variable, then use that,
     # otherwise use the URL we constructed above.
     if [ -z "$TTRSS_SELF_URL" ]; then
