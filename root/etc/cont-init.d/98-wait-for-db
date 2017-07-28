@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv sh
+
+# Wait for the DB to be reachable before proceeding. This avoids race condition
+# whereby database is not ready (yet), and so TTRSS config isn't correctly created
+
+#############
+# This simply duplicates the logic from ttrss-configure-db.php
+ename='DB';
+eport=5432;
+
+if [ '$DB_TYPE' = 'mysql' ];
+then
+	eport=3306;
+	dbhost=$DB_PORT_3306_TCP_ADDR
+else
+	eport=5432;
+	dbhost=$DB_PORT_5432_TCP_ADDR
+fi
+#############
+
+# Run wait-for to confirm DB comes up before we proceed
+# Reduce default timeout to 1s because if the DB is not instantly available,
+# Then it's even if it _happens_ to become available while we're testing,
+# it won't be ready for us yet. Better to exit and restart the container altogether,
+# So set "S6_BEHAVIOUR_IF_STAGE2_FAILS=2" in docker-compose.yml if you need this (i.e., in swarm mode, where dependencies don't work) 
+
+echo "Checking database responds within 1s on $dbhost:$eport..."
+/srv/wait-for $dbhost:$eport --timeout=1 
