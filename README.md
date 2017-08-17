@@ -8,6 +8,7 @@ This Dockerfile installs Tiny Tiny RSS (TT-RSS) with the following features:
 - Works nicely with jwilder's [nginx-proxy](https://github.com/jwilder/nginx-proxy), e.g. to use for Let's Encrypt SSL certificates
 - Integrated [Feedly theme](https://github.com/levito/tt-rss-feedly-theme)
 - **New:** Integrated [FeedIron plugin](https://github.com/m42e/ttrss_plugin-feediron) to get modify feeds
+- **New:** Integrated [Fever API plugin](https://github.com/dasmurphy/tinytinyrss-fever-plugin) to use mobile clients supporting Fever API
 - Integrated [Mobilize plugin](https://github.com/sepich/tt-rss-mobilize) for using Readability, Instapaper + Google Mobilizer
 - Integrated [News+ plugin](https://github.com/hrk/tt-rss-newsplus-plugin) for [News+](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus) on Android
 - Optional: Self-signed 2048-bit RSA TLS certificate for accessing TT-RSS via https
