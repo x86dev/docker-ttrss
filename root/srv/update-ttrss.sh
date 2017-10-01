@@ -48,6 +48,16 @@ update_theme_feedly()
     ln -f -s ${TTRSS_PATH}/themes/feedly-git/feedly.css ${TTRSS_PATH}/themes/feedly.css
 }
 
+update_theme_breeze()
+{
+	echo "Updating: Breeze theme"
+	( cd ${TTRSS_PATH}/themes/breeze-git && git pull origin HEAD )
+
+	# Link theme to TTRSS.
+	ln -f -s ${TTRSS_PATH}/themes/breeze-git/breeze ${TTRSS_PATH}/themes/breeze
+	ln -f -s ${TTRSS_PATH}/themes/breeze-git/breeze-dark.css ${TTRSS_PATH}/themes/breeze-dark.css
+}
+
 update_common()
 {
     if [ -z "$MY_ROOT_UID" ]; then
@@ -72,6 +82,7 @@ update_plugin_mobilize
 update_plugin_newsplus
 update_plugin_feediron
 update_theme_feedly
+update_theme_breeze
 update_common
 
 echo "Update: Done"
