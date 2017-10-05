@@ -2,12 +2,14 @@
 
 This Dockerfile installs Tiny Tiny RSS (TT-RSS) with the following features:
 
-- **New:** Based on [Docker-Alpine](https://github.com/gliderlabs/docker-alpine) and [s6](http://skarnet.org/software/s6/) as the supervisor
-- **New:** Small and lightweight image size (about 100 MB)
+- **New:** Now using PHP 7
+- Based on [Docker-Alpine](https://github.com/gliderlabs/docker-alpine) and [s6](http://skarnet.org/software/s6/) as the supervisor
+- Based on [Docker-Alpine](https://github.com/gliderlabs/docker-alpine) and [s6](http://skarnet.org/software/s6/) as the supervisor
+- Small and lightweight image size (< 100 MB)
 - Rolling release support: Updates TT-RSS automatically every day
 - Works nicely with jwilder's [nginx-proxy](https://github.com/jwilder/nginx-proxy), e.g. to use for Let's Encrypt SSL certificates
 - Integrated [Feedly theme](https://github.com/levito/tt-rss-feedly-theme)
-- **New:** Integrated [FeedIron plugin](https://github.com/m42e/ttrss_plugin-feediron) to get modify feeds
+- Integrated [FeedIron plugin](https://github.com/m42e/ttrss_plugin-feediron) to get modify feeds
 - Integrated [Mobilize plugin](https://github.com/sepich/tt-rss-mobilize) for using Readability, Instapaper + Google Mobilizer
 - Integrated [News+ plugin](https://github.com/hrk/tt-rss-newsplus-plugin) for [News+](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus) on Android
 - Optional: Self-signed 2048-bit RSA TLS certificate for accessing TT-RSS via https
@@ -38,7 +40,7 @@ Just start up a new database container:
 Next, run the actual TT-RSS instance by doing a:
 
 ```bash
-# docker run -d --link $DB:db -p 80:8080 --name ttrss x86dev/docker-ttrss
+# docker run -d --link $DB:db -p 8888:8080 --name ttrss x86dev/docker-ttrss
 ```
 
 Running this command for the first time will download the image automatically.
@@ -46,10 +48,10 @@ Running this command for the first time will download the image automatically.
 
 ## Accessing your Tiny Tiny RSS (TT-RSS)
 
-The above example exposes the TT-RSS web interface on port 80 (http), so that you can browse to:
+The above example exposes the TT-RSS web interface on port 8888 (http), so that you can browse to:
 
 ```bash
-http://<yourhost>
+http://localhost:8888
 ```
 
 The default login credentials are:
