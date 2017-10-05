@@ -64,7 +64,6 @@ setup_ttrss()
             git clone --depth=1 ${TTRSS_REPO_URL} ${TTRSS_PATH}
         fi
         git clone --depth=1 https://github.com/sepich/tt-rss-mobilize.git ${TTRSS_PATH}/plugins/mobilize
-        git clone --depth=1 https://github.com/hrk/tt-rss-newsplus-plugin.git ${TTRSS_PATH}/plugins/api_newsplus
         git clone --depth=1 https://github.com/m42e/ttrss_plugin-feediron.git ${TTRSS_PATH}/plugins/feediron
         git clone --depth=1 https://github.com/levito/tt-rss-feedly-theme.git ${TTRSS_PATH}/themes/feedly-git
     fi
@@ -113,12 +112,11 @@ setup_ttrss()
     # Enable additional system plugins.
     if [ -z ${TTRSS_PLUGINS} ]; then
 
-        # api_newsplus (API for News+ Android App).
-        TTRSS_PLUGINS=api_newsplus
+        TTRSS_PLUGINS=
 
         # Only if SSL/TLS is enabled: af_zz_imgproxy (Loads insecure images via built-in proxy).
         if [ "$TTRSS_PROTO" = "https" ]; then
-            TTRSS_PLUGINS=${TTRSS_PLUGINS},af_zz_imgproxy
+            TTRSS_PLUGINS=${TTRSS_PLUGINS}af_zz_imgproxy
         fi
     fi
 
