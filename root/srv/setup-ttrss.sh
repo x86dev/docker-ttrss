@@ -15,7 +15,7 @@ setup_nginx()
         if [ ! -f "/etc/ssl/private/ttrss.key" ]; then
             echo "Setup: Generating self-signed certificate ..."
             # Generate the TLS certificate for our Tiny Tiny RSS server instance.
-            openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 \
+            openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 \
                 -subj "/C=US/ST=World/L=World/O=$TTRSS_HOST/CN=$TTRSS_HOST" \
                 -keyout "/etc/ssl/private/ttrss.key" \
                 -out "/etc/ssl/certs/ttrss.crt"

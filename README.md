@@ -10,7 +10,7 @@ This Dockerfile installs Tiny Tiny RSS (TT-RSS) with the following features:
 - Integrated [Feedly theme](https://github.com/levito/tt-rss-feedly-theme)
 - Integrated [FeedIron plugin](https://github.com/m42e/ttrss_plugin-feediron) to get modify feeds
 - Integrated [Mobilize plugin](https://github.com/sepich/tt-rss-mobilize) for using Readability, Instapaper + Google Mobilizer
-- Optional: Self-signed 2048-bit RSA TLS certificate for accessing TT-RSS via https
+- Optional: Self-signed 4096-bit RSA TLS certificate for accessing TT-RSS via https
 - Originally was based on [clue/docker-ttrss](https://github.com/clue/docker-ttrss)
 
 A ready-to-use Docker image is available at [Docker Hub](https://hub.docker.com/r/x86dev/docker-ttrss/)
