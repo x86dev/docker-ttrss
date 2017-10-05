@@ -77,9 +77,9 @@ setup_ttrss()
         TTRSS_URL=localhost
     fi
 
-    # Tweak TTRSS_PORT, if defined.
-    if [ -n "$TTRSS_PORT" ]; then
-        TTRSS_PORT=:${TTRSS_PORT}
+    # Check if TTRSS_PORT is undefined, and if so, use 8888 as default.
+    if [ -z ${TTRSS_PORT} ]; then
+        TTRSS_PORT=8888
     fi
 
     if [ "$TTRSS_WITH_SELFSIGNED_CERT" = "1" ]; then
@@ -93,7 +93,7 @@ setup_ttrss()
         TTRSS_PROTO=http
     fi
 
-    # Add a leading colon (for the final URL) if a custom port is set.
+    # Add a leading colon (for the final URL) to the port.
     if [ -n "$TTRSS_PORT" ]; then
         TTRSS_PORT=:${TTRSS_PORT}
     fi
