@@ -9,8 +9,10 @@ RUN set -xe && \
     apk update && apk upgrade && \
     apk add --no-cache --virtual=run-deps \
     nginx git ca-certificates curl \
-    php5 php5-fpm php5-curl php5-dom php5-gd php5-json php5-mcrypt php5-pcntl \
-    php5-pdo php5-pdo_pgsql php5-pgsql php5-pdo_mysql php5-mysql php5-mysqli php5-posix
+    php7 php7-fpm php7-curl php7-dom php7-gd php7-iconv php7-json php7-mcrypt \
+    php7-pgsql php7-pcntl php7-pdo php7-pdo_pgsql \
+    php7-mysqli php7-pdo_mysql \
+    php7-mbstring php7-posix php7-session
 
 # Add user www-data for php-fpm.
 # 82 is the standard uid/gid for "www-data" in Alpine.

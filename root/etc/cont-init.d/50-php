@@ -2,10 +2,9 @@
 
 # Make sure to have a defined set of PHP binaries,
 # regardless of how the package maintainer(s) named those.
-if [ ! -f /usr/bin/php ]; then
-    ln -s /usr/bin/php5 /usr/bin/php
-fi
 
-if [ ! -f /usr/bin/php-fpm ]; then
-    ln -s /usr/bin/php-fpm5 /usr/bin/php-fpm
-fi
+rm /usr/bin/php
+ln -s /usr/bin/php7 /usr/bin/php
+
+rm /usr/sbin/php-fpm
+ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm
