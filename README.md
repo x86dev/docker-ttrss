@@ -38,7 +38,7 @@ Just start up a new database container:
 Next, run the actual TT-RSS instance by doing a:
 
 ```bash
-# docker run -d --link $DB:db -p 8888:8080 --name ttrss x86dev/docker-ttrss
+# docker run -d --link $DB:db -e TTRSS_PORT=8080 --name ttrss x86dev/docker-ttrss
 ```
 
 Running this command for the first time will download the image automatically.
@@ -46,10 +46,10 @@ Running this command for the first time will download the image automatically.
 
 ## Accessing your Tiny Tiny RSS (TT-RSS)
 
-The above example exposes the TT-RSS web interface on port 8888 (http), so that you can browse to:
+The above example exposes the TT-RSS web interface on port 8080 (http / unencrypted), so that you can browse to:
 
 ```bash
-http://localhost:8888
+http://localhost:8080
 ```
 
 The default login credentials are:
@@ -117,7 +117,7 @@ This is particular useful for your initial database setup, as errors get reporte
 the console and further execution will halt.
 
 ```bash
-# docker run -it --link ttrss-data:db --name ttrss x86dev/docker-ttrss
+# docker run -it -e TTRSS_PORT=8080 --link ttrss-data:db --name ttrss x86dev/docker-ttrss
 ```
 
 ### Database configuration
