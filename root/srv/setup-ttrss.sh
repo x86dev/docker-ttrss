@@ -76,13 +76,7 @@ setup_ttrss()
         TTRSS_URL=localhost
     fi
 
-    # Check if TTRSS_PORT is undefined, and if so, use 8888 as default.
-    if [ -z ${TTRSS_PORT} ]; then
-        TTRSS_PORT=8888
-    fi
-
     if [ "$TTRSS_WITH_SELFSIGNED_CERT" = "1" ]; then
-
         # Make sure the TTRSS protocol is https now.
         TTRSS_PROTO=https
     fi
