@@ -8,7 +8,7 @@
 ename='DB';
 eport=5432;
 
-if [ '$DB_TYPE' = 'mysql' ];
+if [ "$DB_TYPE" = 'mysql' ];
 then
 	eport=3306;
 	dbhost=$DB_PORT_3306_TCP_ADDR
