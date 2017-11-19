@@ -79,9 +79,9 @@ A nice thing to have is jwilder's [nginx-proxy](https://github.com/jwilder/nginx
 Docker container running on the same machine as this one.
 
 That way you easily can integrate your TT-RSS instance with an existing domain by using a sub domain
-(e.g. https://ttrss.yourdomain.tld). 
+(e.g. https://ttrss.yourdomain.tld).
 
-### Enabling SSL/TLS encryption support 
+### Enabling SSL/TLS encryption support
 
 In combination with an official Let's Encrypt certificate you
 can get a nice A+ encryption/security rating over at [SSLLabs](https://www.ssllabs.com/ssltest/).
@@ -166,6 +166,11 @@ minimum:
 ```
 ## Useful stuff to know
 
+### Single User mode
+In case you are running behind a proxy that has basic auth and you do not wish to use
+ttrss auth, you can set the enviroment variable TTRSS_SINGLEUSER to true and it
+will change the setup to single user mode
+
 ### Backing up / moving to another server
 
 Decided to back up your data container and/or move to another server? Here's how
@@ -200,11 +205,11 @@ this container takes the burden any checks for updates of TT-RSS and the accompa
 plugins/themes every day via an own update script (see `root/srv/update-ttrss.sh`).
 
 By default the update script checks every 24 hours if there are updates for TT-RSS,
-the plugins or the theme(s) available. 
+the plugins or the theme(s) available.
 
-If you want to change the update interval you just need to edit the file 
+If you want to change the update interval you just need to edit the file
 `root/etc/services.d/ttrss-updater/run` and change the `--wait-exit 24h` to fit your needs, whereas
-the suffix `h` stands for hours, `m` for minutes and `s` for seconds. 
+the suffix `h` stands for hours, `m` for minutes and `s` for seconds.
 
 
 ### Want to contribute?
