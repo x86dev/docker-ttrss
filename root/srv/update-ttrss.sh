@@ -10,7 +10,19 @@ update_ttrss()
     fi
 
     echo "Updating: Tiny Tiny RSS"
-    ( cd ${TTRSS_PATH} && git pull origin HEAD )
+    # Restore original files to avoid git conflicts
+    cd ${TTRSS_PATH}
+    mv plugins.local ${TTRSS_PATH}.temp/
+    mv ${TTRSS_PATH}.orig/plugins.local .
+    mv themes.local ${TTRSS_PATH}.temp/
+    mv ${TTRSS_PATH}.orig/themes.local .
+    # Update
+    git pull origin HEAD
+    # Switch back to links
+    mv plugins.local ${TTRSS_PATH}.orig/
+    mv ${TTRSS_PATH}.temp/plugins.local .
+    mv themes.local ${TTRSS_PATH}.orig/
+    mv ${TTRSS_PATH}.temp/themes.local .
 }
 
 update_plugin_mobilize()
