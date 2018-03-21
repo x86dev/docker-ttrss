@@ -1,5 +1,7 @@
 ---
-# run with
+# Provides service over TLS via proxy as a subdomain
+# Implements x86dev/docker-ttrss with external postgres and jwilder/nginx-proxy + jrcs/letsencrypt-nginx-proxy-companion 
+# Usage: run with
 # docker stack deploy -c ttrss_stack.yaml ttrss
 version: '3.1'
 
