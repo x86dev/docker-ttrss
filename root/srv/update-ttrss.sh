@@ -28,6 +28,12 @@ update_plugin_feediron()
     ( cd ${TTRSS_PATH}/plugins/feediron && git pull origin HEAD )
 }
 
+update_plugin_fever()
+{
+    echo "Updating: Fever API"
+    ( cd ${TTRSS_PATH}/plugins/fever && git pull origin HEAD )
+}
+
 update_theme_feedly()
 {
     echo "Updating: Feedly theme"
@@ -60,6 +66,7 @@ update_common()
 update_ttrss
 update_plugin_mobilize
 update_plugin_feediron
+update_plugin_fever
 update_theme_feedly
 update_common
 
