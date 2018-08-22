@@ -1,5 +1,3 @@
-Can be found at [Docker Hub](https://hub.docker.com/r/noahvrz/docker-ttrss/)
-
 # docker-ttrss
 
 This Dockerfile installs Tiny Tiny RSS (TT-RSS) with the following features:
