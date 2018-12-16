@@ -63,7 +63,12 @@ $pdo = dbconnect($config);
 try {
     $pdo->query('SELECT 1 FROM ttrss_feeds');
     echo 'Connection to database successful' . PHP_EOL;
-    // reached this point => table found, assume db is complete
+    // Reached this point => table found, assume db is complete
+
+    // Make sure to set the default theme provided by TT-RSS.
+    // Other themes might break everything after an update, so play safe here.
+    echo 'Resetting theme to default ...' . PHP_EOL;
+    $pdo->query("UPDATE ttrss_user_prefs SET value = '' WHERE pref_name = 'USER_CSS_THEME'");
 }
 catch (PDOException $e) {
     echo 'Database table not found, applying schema... ' . PHP_EOL;
