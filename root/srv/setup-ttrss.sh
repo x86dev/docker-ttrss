@@ -51,6 +51,12 @@ setup_ttrss()
     	TTRSS_PATH=/var/www/ttrss
     fi
 
+    TTRSS_PATH_THEMES=${TTRSS_PATH}/themes.local
+    mkdir -p ${TTRSS_PATH_THEMES}
+
+    TTRSS_PATH_PLUGINS=${TTRSS_PATH}/plugins.local
+    mkdir -p ${TTRSS_PATH_PLUGINS}
+
     if [ ! -d ${TTRSS_PATH} ]; then
         mkdir -p ${TTRSS_PATH}
         if [ -n "$TTRSS_GIT_TAG" ]; then
@@ -63,10 +69,10 @@ setup_ttrss()
             echo "Setup: Setting up Tiny Tiny RSS (latest revision) ..."
             git clone --depth=1 ${TTRSS_REPO_URL} ${TTRSS_PATH}
         fi
-        git clone --depth=1 https://github.com/sepich/tt-rss-mobilize.git ${TTRSS_PATH}/plugins/mobilize
-        git clone --depth=1 https://github.com/m42e/ttrss_plugin-feediron.git ${TTRSS_PATH}/plugins/feediron
-        git clone --depth=1 https://github.com/levito/tt-rss-feedly-theme.git ${TTRSS_PATH}/themes/levito-feedly-git
-        git clone --depth=1 https://github.com/Gravemind/tt-rss-feedlish-theme.git ${TTRSS_PATH}/themes/gravemind-feedly-git
+        git clone --depth=1 https://github.com/sepich/tt-rss-mobilize.git ${TTRSS_PATH_PLUGINS}/mobilize
+        git clone --depth=1 https://github.com/m42e/ttrss_plugin-feediron.git ${TTRSS_PATH_PLUGINS}/feediron
+        git clone --depth=1 https://github.com/levito/tt-rss-feedly-theme.git ${TTRSS_PATH_THEMES}/levito-feedly-git
+        git clone --depth=1 https://github.com/Gravemind/tt-rss-feedlish-theme.git ${TTRSS_PATH_THEMES}/gravemind-feedly-git
     fi
 
     # Add initial config.

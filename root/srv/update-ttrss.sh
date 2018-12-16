@@ -1,6 +1,8 @@
 #!/bin/sh
 
 TTRSS_PATH=/var/www/ttrss
+TTRSS_PATH_THEMES=${TTRSS_PATH}/themes.local
+TTRSS_PATH_PLUGINS=${TTRSS_PATH}/plugins.local
 
 update_ttrss()
 {
@@ -16,24 +18,21 @@ update_ttrss()
 update_plugin_mobilize()
 {
     echo "Updating: Mobilize plugin"
-    ( cd ${TTRSS_PATH}/plugins/mobilize && git pull origin HEAD )
+    ( cd ${TTRSS_PATH_PLUGINS}/mobilize && git pull origin HEAD )
 
     # Patch ttrss-mobilize plugin for getting it to work.
-    sed -i -e "s/<?$/<?php/g" ${TTRSS_PATH}/plugins/mobilize/m.php
+    sed -i -e "s/<?$/<?php/g" ${TTRSS_PATH_PLUGINS}/mobilize/m.php
 }
 
 update_plugin_feediron()
 {
     echo "Updating: FeedIron"
-    ( cd ${TTRSS_PATH}/plugins/feediron && git pull origin HEAD )
+    ( cd ${TTRSS_PATH_PLUGINS}/feediron && git pull origin HEAD )
 }
 
 update_themes()
 {
     echo "Updating: Themes"
-
-    TTRSS_PATH_THEMES=${TTRSS_PATH}/themes.local
-    mkdir -p ${TTRSS_PATH_THEMES}
 
     ( cd ${TTRSS_PATH_THEMES}/levito-feedly-git && git pull origin HEAD )
     ( cd ${TTRSS_PATH_THEMES}/gravemind-feedly-git && git pull origin HEAD )
