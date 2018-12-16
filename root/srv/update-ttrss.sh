@@ -28,14 +28,23 @@ update_plugin_feediron()
     ( cd ${TTRSS_PATH}/plugins/feediron && git pull origin HEAD )
 }
 
-update_theme_feedly()
+update_themes()
 {
-    echo "Updating: Feedly theme"
-    ( cd ${TTRSS_PATH}/themes/feedly-git && git pull origin HEAD )
+    echo "Updating: Themes"
+    ( cd ${TTRSS_PATH}/themes/levito-feedly-git && git pull origin HEAD )
+    ( cd ${TTRSS_PATH}/themes/gravemind-feedly-git && git pull origin HEAD )
 
-    # Link theme to TTRSS.
-    ln -f -s ${TTRSS_PATH}/themes/feedly-git/feedly ${TTRSS_PATH}/themes/feedly
-    ln -f -s ${TTRSS_PATH}/themes/feedly-git/feedly.css ${TTRSS_PATH}/themes/feedly.css
+    cd ${TTRSS_PATH}/themes
+
+    # Link Levito theme to TTRSS.
+    ln -f -s ${TTRSS_PATH}/themes/levito-feedly-git/feedly
+    ln -f -s ${TTRSS_PATH}/themes/levito-feedly-git/feedly.css
+
+    # Link Gravemind theme to TTRSS.
+    ln -f -s ${TTRSS_PATH}/themes/gravemind-feedly-git/feedlish.css
+    ln -f -s ${TTRSS_PATH}/themes/gravemind-feedly-git/feedlish.css.map
+    ln -f -s ${TTRSS_PATH}/themes/gravemind-feedly-git/feedlish-night.css
+    ln -f -s ${TTRSS_PATH}/themes/gravemind-feedly-git/feedlish-night.css.map
 }
 
 update_common()
@@ -60,7 +69,7 @@ update_common()
 update_ttrss
 update_plugin_mobilize
 update_plugin_feediron
-update_theme_feedly
+update_themes
 update_common
 
 echo "Update: Done"
