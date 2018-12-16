@@ -31,20 +31,23 @@ update_plugin_feediron()
 update_themes()
 {
     echo "Updating: Themes"
-    ( cd ${TTRSS_PATH}/themes/levito-feedly-git && git pull origin HEAD )
-    ( cd ${TTRSS_PATH}/themes/gravemind-feedly-git && git pull origin HEAD )
 
-    cd ${TTRSS_PATH}/themes
+    TTRSS_PATH_THEMES=${TTRSS_PATH}/themes.local
+
+    ( cd ${TTRSS_PATH_THEMES}/levito-feedly-git && git pull origin HEAD )
+    ( cd ${TTRSS_PATH_THEMES}/gravemind-feedly-git && git pull origin HEAD )
+
+    cd ${TTRSS_PATH_THEMES}
 
     # Link Levito theme to TTRSS.
-    ln -f -s ${TTRSS_PATH}/themes/levito-feedly-git/feedly
-    ln -f -s ${TTRSS_PATH}/themes/levito-feedly-git/feedly.css
+    ln -f -s ${TTRSS_PATH_THEMES}/levito-feedly-git/feedly
+    ln -f -s ${TTRSS_PATH_THEMES}/levito-feedly-git/feedly.css
 
     # Link Gravemind theme to TTRSS.
-    ln -f -s ${TTRSS_PATH}/themes/gravemind-feedly-git/feedlish.css
-    ln -f -s ${TTRSS_PATH}/themes/gravemind-feedly-git/feedlish.css.map
-    ln -f -s ${TTRSS_PATH}/themes/gravemind-feedly-git/feedlish-night.css
-    ln -f -s ${TTRSS_PATH}/themes/gravemind-feedly-git/feedlish-night.css.map
+    ln -f -s ${TTRSS_PATH_THEMES}/gravemind-feedly-git/feedlish.css
+    ln -f -s ${TTRSS_PATH_THEMES}/gravemind-feedly-git/feedlish.css.map
+    ln -f -s ${TTRSS_PATH_THEMES}/gravemind-feedly-git/feedlish-night.css
+    ln -f -s ${TTRSS_PATH_THEMES}/gravemind-feedly-git/feedlish-night.css.map
 }
 
 update_common()
