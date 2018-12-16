@@ -33,6 +33,7 @@ update_themes()
     echo "Updating: Themes"
 
     TTRSS_PATH_THEMES=${TTRSS_PATH}/themes.local
+    mkdir -p ${TTRSS_PATH_THEMES}
 
     ( cd ${TTRSS_PATH_THEMES}/levito-feedly-git && git pull origin HEAD )
     ( cd ${TTRSS_PATH_THEMES}/gravemind-feedly-git && git pull origin HEAD )
