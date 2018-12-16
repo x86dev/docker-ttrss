@@ -2,7 +2,7 @@
 
 This Dockerfile installs Tiny Tiny RSS (TT-RSS) with the following features:
 
-- **New:** [Feedly-ish theme](https://github.com/Gravemind/tt-rss-feedlish-theme)
+- **New:** Integrated [Feedly-ish theme](https://github.com/Gravemind/tt-rss-feedlish-theme) for supporting latest TT-RSS versions
 - Based on [Docker-Alpine](https://github.com/gliderlabs/docker-alpine) and [s6](http://skarnet.org/software/s6/) as the supervisor
 - Using PHP 7
 - Small and lightweight image size (< 100 MB)
