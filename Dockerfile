@@ -12,7 +12,7 @@ RUN set -xe && \
     php7 php7-fpm php7-curl php7-dom php7-gd php7-iconv php7-fileinfo php7-json \
     php7-mcrypt php7-pgsql php7-pcntl php7-pdo php7-pdo_pgsql \
     php7-mysqli php7-pdo_mysql \
-    php7-mbstring php7-posix php7-session
+    php7-mbstring php7-posix php7-session php7-intl
 
 # Add user www-data for php-fpm.
 # 82 is the standard uid/gid for "www-data" in Alpine.
