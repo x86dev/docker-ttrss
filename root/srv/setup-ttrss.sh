@@ -108,6 +108,11 @@ setup_ttrss()
 
     echo "Setup: URL is: $TTRSS_SELF_URL"
 
+    # By default we want to reset the theme to the default one.
+    if [ -z ${TTRSS_THEME_RESET} ]; then
+        TTRSS_THEME_RESET=1
+    fi
+
     # Patch URL path.
     sed -i -e 's@htt.*/@'"${TTRSS_SELF_URL}"'@g' ${TTRSS_PATH}/config.php
 
@@ -131,6 +136,11 @@ setup_ttrss()
     echo "Setup: Additional plugins: $TTRSS_PLUGINS"
 
     sed -i -e "s/.*define('PLUGINS'.*/define('PLUGINS', '$TTRSS_PLUGINS, auth_internal, note, updater');/g" ${TTRSS_PATH}/config.php
+
+    # Export variables for sub shells.
+    export TTRSS_PATH
+    export TTRSS_PATH_PLUGINS
+    export TTRSS_THEME_RESET
 }
 
 setup_db()
