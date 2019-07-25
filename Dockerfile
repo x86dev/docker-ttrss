@@ -39,6 +39,6 @@ ENV DB_USER ttrss
 ENV DB_PASS ttrss
 
 # Clean up.
-RUN set -xe && apk del --progress --purge && rm -rf /var/cache/apk/*
+RUN set -xe && apk del --progress --purge && rm -rf /var/cache/apk/* && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/init"]
