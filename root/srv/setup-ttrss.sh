@@ -114,7 +114,7 @@ setup_ttrss()
     fi
 
     # Patch URL path.
-    sed -i -e 's@htt.*/@'"${TTRSS_SELF_URL}"'@g' ${TTRSS_PATH}/config.php
+    sed -i -e "s@define('SELF_URL_PATH'.*@define('SELF_URL_PATH', '$TTRSS_SELF_URL');@g" ${TTRSS_PATH}/config.php
 
     # Check if single user mode is selected
     if [ "$TTRSS_SINGLEUSER" = true ]; then
