@@ -31,10 +31,16 @@ or using one of available apps.
 This section assumes you want to get started quickly, the following sections explain the
 steps in more detail. So let's start.
 
-Just start up a new database container:
+Create a new database volume:
 
 ```bash
-# DB=$(docker run -d nornagon/postgres)
+# docker volume create ttrss-db
+```
+
+Create a Postgres database instance:
+
+```bash
+# DB=$(docker run -d --restart-always --name ttrss-db -v ttrss-db:/var/lib/postgresql/data -e POSTGRES_PASSWORD=password postgres:alpine)
 ```
 
 Next, run the actual TT-RSS instance by doing a:
@@ -109,8 +115,11 @@ any, as long as is exposes its database port (5432) to the outside.
 Example:
 
 ```bash
-# docker run -d --name=ttrss-data nornagon/postgres
+# docker volume create ttrss-db
+# docker run -d --restart=always --name=ttrss-db -v ttrss-db:/var/lib/postgresql/data -e POSTGRES_PASSWORD=<password> postgres:alpine
 ```
+
+Note: The above example creates a separate data volume where the actual Postgres database data lives in.
 
 ### Testing TT-RSS in foreground
 
@@ -119,7 +128,7 @@ This is particular useful for your initial database setup, as errors get reporte
 the console and further execution will halt.
 
 ```bash
-# docker run -it -e TTRSS_PORT=8080 --link ttrss-data:db --name ttrss x86dev/docker-ttrss
+# docker run -it -e TTRSS_PORT=8080 --link ttrss-db:db --name ttrss x86dev/docker-ttrss
 ```
 
 ### Database configuration
@@ -164,7 +173,7 @@ Remaining arguments can be passed just like before, the following is the recomme
 minimum:
 
 ```bash
-# docker run -d --link ttrss-data:db --name ttrss x86dev/docker-ttrss
+# docker run -d --link ttrss-db:db --name ttrss x86dev/docker-ttrss
 ```
 ## Useful stuff to know
 
@@ -178,25 +187,10 @@ will change the setup to single user mode
 Decided to back up your data container and/or move to another server? Here's how
 you do it:
 
-On the old server, stop your TT-RSS container and then do:
-
-```bash
-# docker export <container name> | gzip > /tmp/<filename>.tar.gz
-```
-
-On the new server, copy the created .tar.gz file from the old server and
-import the file with:
-
-```bash
-# docker import <filename>.tar.gz
-```
-
-This will import the container from the .tar.gz file into Docker's local registry.
-After that you can run that imported container again the usual way with:
-
-```bash
-# docker run -d <IMAGE ID>
-```
+* On the old server, stop your TT-RSS container.
+* Back up the database volume (```ttrss-db```) and copy it to the new server.
+* Repeat the steps for creating the TT-RSS database container and the actual TT-RSS instance.
+  This time the (old) database volume will be already around, so that you can start right away.
 
 ### Automatic updates
 
