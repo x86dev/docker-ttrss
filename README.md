@@ -2,6 +2,7 @@
 
 This Dockerfile installs Tiny Tiny RSS (TT-RSS) with the following features:
 
+- **New:** Now uses a dedicated volume for the Postgres database data
 - **New:** Integrated [Feedly-ish theme](https://github.com/Gravemind/tt-rss-feedlish-theme) for supporting latest TT-RSS versions
 - **New:** When starting the container, the default theme will be (re-)applied. This should help when a theme breaks (again)
 - Based on [Docker-Alpine](https://github.com/gliderlabs/docker-alpine) and [s6](http://skarnet.org/software/s6/) as the supervisor
@@ -40,7 +41,7 @@ Create a new database volume:
 Create a Postgres database instance:
 
 ```bash
-# DB=$(docker run -d --restart-always --name ttrss-db -v ttrss-db:/var/lib/postgresql/data -e POSTGRES_PASSWORD=password postgres:alpine)
+# DB=$(docker run -d --restart=always --name ttrss-db -v ttrss-db:/var/lib/postgresql/data -e POSTGRES_PASSWORD=password postgres:alpine)
 ```
 
 Next, run the actual TT-RSS instance by doing a:
