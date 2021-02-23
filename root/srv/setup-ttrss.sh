@@ -115,7 +115,7 @@ setup_ttrss()
 
     # Patch URL path.
     echo "putenv('TTRSS_SELF_URL_PATH=$TTRSS_SELF_URL');" >> ${TTRSS_PATH}/config.php
- 
+
     # Check if single user mode is selected
     if [ "$TTRSS_SINGLEUSER" = true ]; then
         echo "Single User mode Selected"
