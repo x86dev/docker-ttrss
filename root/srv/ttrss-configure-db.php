@@ -85,6 +85,6 @@ catch (PDOException $e) {
 
 $contents = file_get_contents($conffile);
 foreach ($config as $name => $value) {
-    $contents = preg_replace('/(define\s*\(\'' . $name . '\',\s*)(.*)(\);)/', '$1"' . $value . '"$3', $contents);
+    $contents .= "putenv('TTRSS_" . $name . "=" . $value . "');\n";
 }
 file_put_contents($conffile, $contents);
