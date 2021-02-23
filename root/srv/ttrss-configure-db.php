@@ -3,8 +3,7 @@
 
 include '/srv/ttrss-utils.php';
 
-if (!env('TTRSS_PATH', ''))
-    $confpath = '/var/www/ttrss/';
+$confpath = env('TTRSS_PATH', '/var/www/ttrss/');
 $conffile = $confpath . 'config.php';
 
 $ename = 'DB';
