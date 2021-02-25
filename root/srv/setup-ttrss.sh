@@ -114,12 +114,12 @@ setup_ttrss()
     fi
 
     # Patch URL path.
-    sed -i -e "s@define('SELF_URL_PATH'.*@define('SELF_URL_PATH', '$TTRSS_SELF_URL');@g" ${TTRSS_PATH}/config.php
+    echo "putenv('TTRSS_SELF_URL_PATH=$TTRSS_SELF_URL');" >> ${TTRSS_PATH}/config.php
 
     # Check if single user mode is selected
     if [ "$TTRSS_SINGLEUSER" = true ]; then
         echo "Single User mode Selected"
-        sed -i -e "s/.*define('SINGLE_USER_MODE'.*/define('SINGLE_USER_MODE', 'true');/g" ${TTRSS_PATH}/config.php
+        echo "putenv('TTRSS_SINGLE_USER_MODE=1');" >> ${TTRSS_PATH}/config.php
     fi
 
     # Enable additional system plugins.
