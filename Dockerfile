@@ -23,7 +23,7 @@ COPY root /
 
 # Add s6 overlay.
 # Note: Tweak this line if you're running anything other than x86 AMD64 (64-bit).
-RUN curl -L -s https://github.com/just-containers/s6-overlay/releases/download/v1.19.1.1/s6-overlay-amd64.tar.gz | tar xvzf - -C /
+RUN curl -L -s https://github.com/just-containers/s6-overlay/releases/download/v3.1.2.1/s6-overlay-x86_64.tar.xz | tar xvf - -C /
 
 # Add wait-for-it.sh
 ADD https://raw.githubusercontent.com/Eficode/wait-for/master/wait-for /srv
