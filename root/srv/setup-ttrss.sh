@@ -44,7 +44,7 @@ setup_nginx()
 setup_ttrss()
 {
     if [ -z "$TTRSS_REPO_URL" ]; then
-        TTRSS_REPO_URL=https://git.tt-rss.org/git/tt-rss.git
+        TTRSS_REPO_URL=https://git.tt-rss.org/fox/tt-rss.git/
     fi
 
     if [ -z "$TTRSS_PATH" ]; then
