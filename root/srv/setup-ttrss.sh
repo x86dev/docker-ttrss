@@ -122,6 +122,13 @@ setup_ttrss()
         echo "putenv('TTRSS_SINGLE_USER_MODE=1');" >> ${TTRSS_PATH}/config.php
     fi
 
+    # Skip self url checks ("Please set SELF_URL_PATH to the correct value detected for your server:"). 
+    # Useful if using a reverse proxy
+    if [ -n "${TTRSS_SKIP_SELF_URL_PATH_CHECKS}" ]; then
+        echo "Setup: Skipping self url path checks"
+        echo "define('_SKIP_SELF_URL_PATH_CHECKS', true);" >> ${TTRSS_PATH}/config.php
+    fi
+
     # Enable additional system plugins.
     if [ -z ${TTRSS_PLUGINS} ]; then
 

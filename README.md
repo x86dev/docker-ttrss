@@ -1,4 +1,4 @@
-﻿# docker-ttrss
+# docker-ttrss
 
 This Dockerfile installs Tiny Tiny RSS (TT-RSS) with the following features:
 
@@ -89,6 +89,8 @@ Docker container running on the same machine as this one.
 
 That way you easily can integrate your TT-RSS instance with an existing domain by using a sub domain
 (e.g. https://ttrss.yourdomain.tld).
+
+You can set the environment variable `TTRSS_SKIP_SELF_URL_PATH_CHECKS=1` (eg. `docker -e  TTRSS_SKIP_SELF_URL_PATH_CHECKS=1 ...`) if you get the error `Please set SELF_URL_PATH to the correct value detected for your server:` when accessing TT-RSS.
 
 ### Enabling SSL/TLS encryption support
 
