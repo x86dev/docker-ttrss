@@ -12,7 +12,8 @@ RUN set -xe && \
     php7 php7-fpm php7-curl php7-dom php7-gd php7-iconv php7-fileinfo php7-json \
     php7-mcrypt php7-pgsql php7-pcntl php7-pdo php7-pdo_pgsql \
     php7-mysqli php7-pdo_mysql \
-    php7-mbstring php7-posix php7-session php7-intl
+    php7-mbstring php7-posix php7-session php7-intl \
+    tar
 
 # Add user www-data for php-fpm.
 # 82 is the standard uid/gid for "www-data" in Alpine.
@@ -23,7 +24,7 @@ COPY root /
 
 # Add s6 overlay.
 # Note: Tweak this line if you're running anything other than x86 AMD64 (64-bit).
-RUN curl -L -s https://github.com/just-containers/s6-overlay/releases/download/v3.1.2.1/s6-overlay-x86_64.tar.xz | tar xvf - -C /
+RUN curl -L -s https://github.com/just-containers/s6-overlay/releases/download/v3.1.2.1/s6-overlay-x86_64.tar.xz | tar xvJf - -C /
 
 # Add wait-for-it.sh
 ADD https://raw.githubusercontent.com/Eficode/wait-for/master/wait-for /srv
