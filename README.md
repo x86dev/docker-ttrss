@@ -4,11 +4,12 @@
 
 This Dockerfile installs Tiny Tiny RSS (TT-RSS) with the following features:
 
-- **New:** Now uses a dedicated volume for the Postgres database data
-- **New:** Integrated [Feedly-ish theme](https://github.com/Gravemind/tt-rss-feedlish-theme) for supporting latest TT-RSS versions
-- **New:** When starting the container, the default theme will be (re-)applied. This should help when a theme breaks (again)
+- **New** Using PHP 8 now
+- **New** Latest Docker image is publish on Github directly now: https://ghcr.io/x86dev/docker-ttrss
+- Uses a dedicated volume for the Postgres database data
+- Integrated [Feedly-ish theme](https://github.com/Gravemind/tt-rss-feedlish-theme) for supporting latest TT-RSS versions
+- When starting the container, the default theme will be (re-)applied. This should help when a theme breaks (again)
 - Based on [Docker-Alpine](https://github.com/gliderlabs/docker-alpine) and [s6](http://skarnet.org/software/s6/) as the supervisor
-- Using PHP 7
 - Small and lightweight image size (< 100 MB)
 - Rolling release support: Updates TT-RSS automatically every day
 - Works nicely with jwilder's [nginx-proxy](https://github.com/jwilder/nginx-proxy), e.g. to use for Let's Encrypt SSL certificates
