@@ -21,7 +21,7 @@ RUN set -xe && \
 RUN adduser -u 82 -D -S -G www-data www-data
 
 # Copy root file system.
-COPY root /
+COPY --chown=www-data:www-data root /
 
 # Add s6 overlay.
 #ARG S6_OVERLAY_VERSION=3.1.5.0
