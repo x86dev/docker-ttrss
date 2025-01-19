@@ -5,15 +5,17 @@ FROM docker.io/alpine:3 AS builder
 LABEL description="A complete, self-hosted Tiny Tiny RSS (TTRSS) environment." \
       maintainer="Andreas Löffler <andy@x86dev.com>"
 
+ARG PHP_VER=84
+
 RUN set -xe && \
     apk update && apk upgrade && \
     apk add --no-cache --virtual=run-deps \
     busybox nginx git ca-certificates curl \
-    php81 php81-fpm php81-phar \
-    php81-pdo php81-gd php81-pgsql php81-pdo_pgsql php81-xmlwriter \
-    php81-mbstring php81-intl php81-xml php81-curl php81-simplexml \
-    php81-session php81-tokenizer php81-dom php81-fileinfo php81-ctype \
-    php81-json php81-iconv php81-pcntl php81-posix php81-zip php81-exif php81-openssl \
+    php${PHP_VER} php${PHP_VER}-fpm php${PHP_VER}-phar \
+    php${PHP_VER}-pdo php${PHP_VER}-gd php${PHP_VER}-pgsql php${PHP_VER}-pdo_pgsql php${PHP_VER}-xmlwriter \
+    php${PHP_VER}-mbstring php${PHP_VER}-intl php${PHP_VER}-xml php${PHP_VER}-curl php${PHP_VER}-simplexml \
+    php${PHP_VER}-session php${PHP_VER}-tokenizer php${PHP_VER}-dom php${PHP_VER}-fileinfo php${PHP_VER}-ctype \
+    php${PHP_VER}-json php${PHP_VER}-iconv php${PHP_VER}-pcntl php${PHP_VER}-posix php${PHP_VER}-zip php${PHP_VER}-exif php${PHP_VER}-openssl \
     tar xz
 
 # Add user www-data for php-fpm.
