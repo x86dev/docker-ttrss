@@ -5,6 +5,7 @@ FROM docker.io/alpine:3 AS builder
 LABEL description="A complete, self-hosted Tiny Tiny RSS (TTRSS) environment." \
       maintainer="Andreas Löffler <andy@x86dev.com>"
 
+# Note! When changing this version, also make sure to adapt the scripts which use / lookup the according binaries.
 ARG PHP_VER=84
 
 RUN set -xe && \
