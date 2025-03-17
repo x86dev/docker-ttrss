@@ -60,7 +60,7 @@ update_common()
     fi
 
     echo "Updating: Updating permissions"
-    for CUR_DIR in /etc/nginx /etc/php81 /var/lib/nginx /etc/services.d; do
+    for CUR_DIR in /etc/nginx /etc/php84 /var/lib/nginx /etc/services.d; do
         chown -R ${MY_ROOT_UID}:${MY_ROOT_GID} ${CUR_DIR}
     done
 
