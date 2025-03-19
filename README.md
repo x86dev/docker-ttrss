@@ -1,4 +1,8 @@
-﻿# docker-ttrss
+# No longer maintained due to lack of time. Consider using one of the other Docker-ized TTRSS setups.
+
+---
+ 
+ # docker-ttrss
 
 **The ready-to-use Docker image moved from Docker Hub to Github now: https://ghcr.io/x86dev/docker-ttrss**
 
